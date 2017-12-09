@@ -12,72 +12,85 @@ library(frisk)
 
 #shiny server defintion
 shinyServer(function(input, output, session) {
-
-
+  
+  
   # render output text
   output$txtout <- renderText({
     paste(input$txt, input$slider, format(input$date), sep = ", ")
   })
-
+  
   # render output table - testdata
   output$table <- renderTable({
     head(cars, 4)
   })
-
+  
   # individual person plot
   output$cvdRadarPlot <- renderPlot({
     # calculate cvd for a single person
     cvd_single <- cvd_single_person(input)
     return(cvd_single$plot)
   })
-
+  
   # render cvd table for single person tab
   output$cvdOneTable <- renderTable({
     # calculate cvd for a single person
     cvd_single <- cvd_single_person(input)
     return(head(cvd_single$data))
   })
-
+  
   # render cvd text for single person tab
   output$cvdOneText <- renderText({
     # calculate cvd for a single person
     cvd_single <- cvd_single_person(input)
     resultData <- as.list(cvd_single$data)
-
+    
+    #regex expression to determine tails
+    extreme <- ":" #not extreme
+    if(grepl(">", resultData$risk)) {
+      extreme <- ": >" #greater than
+    } else if(grepl("<", resultData$risk)){
+      extreme <- ": <" #less than
+    }
+    
+    # conver to numeric
+    risk <- gsub("[^0-9\\.]", "", resultData$risk)
+    risk <- as.numeric(as.character(risk))
+    
+    # construct display message
     paste('Dear', input$name,
           'your estimated 10 years risk of having a Cardiovascular disease is',
-          resultData$risk, 'out of 10.',
+          extreme,risk*10, '%.',
           'Due to your risk factors, your heart age is:',
           resultData$heart_age, 'years.', sep = " ")
   })
-
+  
   # Population plot
   output$cvdPopulationPlot <- renderPlotly({
     if(input$populationTab=="simulation"){
       # calculate cvd for a single person
       cvd_population <- cvd_population(input)
-
+      
       return(cvd_population$plot)
     } else {
       return(plot_ly())
     }
-
+    
   })
-
+  
   # upload data and render on table
   output$cvdPopulationDT <- renderDataTable({
     if(input$populationTab=="upload"){
-
+      
       return(uploadFile(input))
     } else{
       cvd_population <- cvd_population(input)
-
+      
       return(cvd_population$data)
     }
   },options = list(scrollX = TRUE))
-
-
-
+  
+  
+  
 })
 
 #' @title cvd_single_person
@@ -86,21 +99,21 @@ shinyServer(function(input, output, session) {
 #' @param input A dataframe
 #' @return list of data and plot
 cvd_single_person <- function (input) {
-
+  
   # call cvd risk function
   if(input$bmiTab=="nonBmi"){
     # call cvd risk function
-      patentCvd <- calc_card_10_one(
-        age = input$"age",
-        gender = input$"gender",
-        bmi = NA,
-        cholesterol = input$"cholesterol",
-        hdl = input$"hdl",
-        sbp = input$"sbp",
-        is_sbp_under_treatment = input$"isSbpTreated",
-        smoking_status = input$"smoking_status",
-        diabetes_status = input$"diabetes_status"
-      )
+    patentCvd <- calc_card_10_one(
+      age = input$"age",
+      gender = input$"gender",
+      bmi = NA,
+      cholesterol = input$"cholesterol",
+      hdl = input$"hdl",
+      sbp = input$"sbp",
+      is_sbp_under_treatment = input$"isSbpTreated",
+      smoking_status = input$"smoking_status",
+      diabetes_status = input$"diabetes_status"
+    )
   } else {
     # call cvd risk function
     patentCvd <- calc_card_10_one(
@@ -116,7 +129,7 @@ cvd_single_person <- function (input) {
     )
   }
   print(head(patentCvd))
-
+  
   # clean data
   cleanPatentCvd <- as.data.frame(patentCvd) %>%
     remove_empty_cols() %>%
@@ -125,7 +138,7 @@ cvd_single_person <- function (input) {
   outputCvd <- as.data.frame(patentCvd) %>%
     remove_empty_cols() %>%
     subset(select = c(points, risk, heart_age))
-
+  
   # radar plot
   plot_radar <- ggradar(
     cleanPatentCvd,
@@ -146,10 +159,10 @@ cvd_single_person <- function (input) {
     legend.text.size = 10,
     font.radar = "Arial"
   )
-
+  
   return(list(plot = plot_radar,
               data = outputCvd)
-         )
+  )
 }
 
 #' @title cvd_population
@@ -158,7 +171,7 @@ cvd_single_person <- function (input) {
 #' @param input A dataframe
 #' @return list of data and plot
 cvd_population <- function (input) {
-
+  
   sample_size <- input$sample_size
   # simulate patients data
   sample <- data.frame(age=sample(30:70,sample_size,rep=TRUE),
@@ -171,16 +184,16 @@ cvd_population <- function (input) {
                        smoking=sample(c(TRUE,FALSE),sample_size,rep=TRUE),
                        diabetes=sample(c(TRUE,FALSE),sample_size,rep=TRUE)
   )
-
+  
   # call frisk function case no bmi
   patients <-calc_card_10(sample, age="age", gender="gender", cholesterol="chl",
                           hdl="hdl", sbp="sbp", is_sbp_under_treatment="isSbpTreated",
                           smoking_status="smoking", diabetes_status="diabetes"
   )
-
+  
   #plot the graph
   plot_graph <- plot_ly(patients, x = ~chl, y = ~sbp, z = ~hdl,
-          marker = list(color = ~points, colorscale = c('#FFE1A1', '#683531'), showscale = TRUE)) %>%
+                        marker = list(color = ~points, colorscale = c('#FFE1A1', '#683531'), showscale = TRUE)) %>%
     add_markers() %>%
     layout(scene = list(xaxis = list(title = 'cholesterol'),
                         yaxis = list(title = 'sbp'),
@@ -193,7 +206,7 @@ cvd_population <- function (input) {
              yref = 'paper',
              showarrow = FALSE
            ))
-
+  
   return(list(plot = plot_graph,
               data = patients)
   )
@@ -203,7 +216,7 @@ cvd_population <- function (input) {
 # helper function to upload
 uploadFile <- function(input){
   inFile <- input$file1
-
+  
   if (is.null(inFile))
     return(NULL)
   tbl <-  read.csv(
@@ -214,7 +227,6 @@ uploadFile <- function(input){
   )
   return(
     tbl ^ 2
-
+    
   )
 }
-
