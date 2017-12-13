@@ -10,10 +10,10 @@ check_packages = function(names){
 check_packages(c("shiny","ggplot2","scales","dplyr","plotly","janitor"))  #check these packages
 
 # install git packages r-framingham
-devtools::install_github("PHP2560-Statistical-Programming-R/r-framingham")
+devtools::install_github("PHP2560-Statistical-Programming-R/r-framingham", dependencies=TRUE)
 
 # install git packages: shinycssloaders
-devtools::install_github('andrewsali/shinycssloaders')
+devtools::install_github('andrewsali/shinycssloaders', dependencies=TRUE)
 
 # install git packages: ggradar
 devtools::install_github("ricardo-bion/ggradar", dependencies=TRUE)
