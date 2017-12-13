@@ -12,9 +12,6 @@ check_packages(c("shiny","ggplot2","scales","dplyr","plotly","janitor"))  #check
 # install git packages r-framingham
 devtools::install_github("PHP2560-Statistical-Programming-R/r-framingham")
 
-# install git packages: ggradar
-devtools::install_github("PHP2560-Statistical-Programming-R/r-framingham")
-
 # install git packages: shinycssloaders
 devtools::install_github('andrewsali/shinycssloaders')
 
