@@ -7,7 +7,7 @@ check_packages = function(names){
   }
 }
 # Checks to see if required packages are already installed.
-check_packages(c("shiny","ggplot2","scales","dplyr","plotly","janitor","shiny"))  #check these packages
+check_packages(c("shiny","ggplot2","scales","dplyr","plotly","janitor"))  #check these packages
 
 # install git packages r-framingham
 devtools::install_github("PHP2560-Statistical-Programming-R/r-framingham")
