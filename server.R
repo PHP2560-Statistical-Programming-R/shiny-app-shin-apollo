@@ -44,22 +44,10 @@ shinyServer(function(input, output, session) {
     cvd_single <- cvd_single_person(input)
     resultData <- as.list(cvd_single$data)
     
-    #regex expression to determine tails
-    extreme <- ":" #not extreme
-    if(grepl(">", resultData$risk)) {
-      extreme <- ": >" #greater than
-    } else if(grepl("<", resultData$risk)){
-      extreme <- ": <" #less than
-    }
-    
-    # conver to numeric
-    risk <- gsub("[^0-9\\.]", "", resultData$risk)
-    risk <- as.numeric(as.character(risk))
-    
     # construct display message
     paste('Dear', input$name,
           'your estimated 10 years risk of having a Cardiovascular disease is',
-          extreme,risk*10, '%.',
+          resultData$risk, '%',
           'Due to your risk factors, your heart age is:',
           resultData$heart_age, 'years.', sep = " ")
   })
