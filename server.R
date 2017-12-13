@@ -1,3 +1,6 @@
+# address prof feedback
+source("check_packages.R")
+
 library(shiny)
 library(ggplot2)
 library(ggradar)
@@ -5,9 +8,6 @@ library(scales)
 library(dplyr)
 library(plotly)
 library(janitor)
-# install.packages("devtools") #!important
-devtools::install_github("PHP2560-Statistical-Programming-R/r-framingham")
-# load frisk library
 library(frisk)
 
 #shiny server defintion

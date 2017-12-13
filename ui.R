@@ -1,9 +1,6 @@
 
 library(plotly)
 library(shiny)
-
-# load css library
-devtools::install_github('andrewsali/shinycssloaders')
 library(shinycssloaders)
 
 
