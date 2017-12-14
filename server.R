@@ -1,5 +1,3 @@
-# address prof feedback
-source("check_packages.R")
 
 library(shiny)
 library(ggplot2)

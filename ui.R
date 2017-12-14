@@ -1,3 +1,5 @@
+# Download all packages: The first time is going to take time
+source("check_packages.R")
 
 library(plotly)
 library(shiny)
