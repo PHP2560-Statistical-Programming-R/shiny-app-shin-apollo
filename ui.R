@@ -214,7 +214,6 @@ shinyUI(
                h4("1. Individual risk Calculator:"),
                img(src='1.png', align = "center",width=650,
                    height= 550),
-               br(),
                img(src='2.png', align = "center",width=650,
                    height= 180),
                br(),
