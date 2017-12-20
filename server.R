@@ -1,4 +1,4 @@
-
+#load required packages
 library(shiny)
 library(ggplot2)
 library(ggradar)
@@ -87,7 +87,7 @@ shinyServer(function(input, output, session) {
 cvd_single_person <- function (input) {
   
   # call cvd risk function
-  if(input$bmiTab=="nonBmi"){
+  if(input$bmiTab=="nonBmi"){ # set if bmi value is used or not
     # call cvd risk function
     patentCvd <- calc_card_10_one(
       age = input$"age",
@@ -116,7 +116,7 @@ cvd_single_person <- function (input) {
   }
   print(head(patentCvd))
   
-  # clean data
+  # clean data by removing empty columns
   cleanPatentCvd <- as.data.frame(patentCvd) %>%
     remove_empty_cols() %>%
     subset(select = -c(risk, heart_age))
@@ -125,7 +125,7 @@ cvd_single_person <- function (input) {
     remove_empty_cols() %>%
     subset(select = c(points, risk, heart_age))
   
-  # radar plot
+  # radar plot of individual risk points
   plot_radar <- ggradar(
     cleanPatentCvd,
     axis.labels = colnames(cleanPatentCvd)[-1],

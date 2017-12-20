@@ -27,7 +27,7 @@ shinyUI(
       "CVD Risk App",
       tabPanel(
 
-        # title
+        # put the title on input tab
         "Individual Risk",
         sidebarPanel(style = "overflow-y:scroll; max-height: 550px",
 
@@ -42,7 +42,7 @@ shinyUI(
             "gender",
             "Gender:",
             choices = c("Male" = "M", "Female" = "F"),
-            selected = "M"
+            selected = "M" #set default to Male
           ),
 
           # sbp numeric input
@@ -59,7 +59,7 @@ shinyUI(
             "isSbpTreated",
             "is SBP under treatment:",
             choices = c("NO" = FALSE, "YES" = TRUE),
-            selected = FALSE
+            selected = FALSE #set default to no sbp treated
           ),
 
           # Smoking option button
@@ -67,7 +67,7 @@ shinyUI(
             "smoking_status",
             "Smoking:",
             choices = c("NO" = FALSE, "YES" = TRUE),
-            selected = FALSE
+            selected = FALSE #set default to no smoking
           ),
 
           # diabetes option button
@@ -75,7 +75,7 @@ shinyUI(
             "diabetes_status",
             "Diabetic:",
             choices = c("NO" = FALSE, "YES" = TRUE),
-            selected = FALSE
+            selected = FALSE #set default to no diabetes
           ),
           tabsetPanel(  id = "bmiTab",
 
