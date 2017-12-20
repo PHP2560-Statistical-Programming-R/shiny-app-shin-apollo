@@ -1,3 +1,4 @@
+#function to check if required packages have been installed
 check_packages = function(names){
   for(name in names){
     if (!(name %in% installed.packages()))

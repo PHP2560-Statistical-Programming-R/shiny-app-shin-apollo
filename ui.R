@@ -1,6 +1,7 @@
 # Download all packages: The first time is going to take time
 source("check_packages.R")
 
+#load required packages
 library(plotly)
 library(shiny)
 library(shinycssloaders)
@@ -143,16 +144,16 @@ shinyUI(
               ,
               tags$hr(),
 
-              # headr checkbox
+              # header checkbox
               checkboxInput('header', 'Header', TRUE),
 
-              # separator
+              # set separators
               radioButtons('sep', 'Separator',
                            c(Comma=',',
                              Semicolon=';',
                              Tab='\t'),
                            ','),
-              # quote
+              # Set quotation marks
               radioButtons('quote', 'Quote',
                            c(None='',
                              'Double Quote'='"',
@@ -167,7 +168,7 @@ shinyUI(
             tabPanel(
               "Visualization",
 
-              # plot 3d plot
+              # plot 3d plot of population
               fluidRow(withSpinner(
                 plotlyOutput("cvdPopulationPlot"),
                 type = 4
