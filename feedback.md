@@ -89,3 +89,5 @@ able to use population function
 - Comment your code more
 - Add more of an introduction to what this does, use screenshots to help aid with the explanation. 
 - Make sure all graphs are labeled
+
+#### Thanks for the feedback: We have addressed these feedback (Changes before turning this in)
