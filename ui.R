@@ -192,8 +192,10 @@ shinyUI(
       # Tab about the app and authors
       tabPanel("About",
                h3(" Introduction:"),
-               (" CVD Risk App is a shiny app that utilize frisk
-                R package to estimate projected 10 years Cardiovascular Diseases(CVD) risk
+               (" CVD Risk App is a shiny app that utilize "),
+                tags$a(href = "https://github.com/PHP2560-Statistical-Programming-R/r-framingham",
+                      "frisk R package "),
+                ("to estimate projected 10 years Cardiovascular Diseases(CVD) risk
                 based on"),
                tags$a(href = "https://www.framinghamheartstudy.org/risk-functions/cardiovascular-disease/10-year-risk.php",
                       "Framingham Heart study"),
@@ -222,6 +224,10 @@ shinyUI(
                tags$a( href = "https://github.com/Nour-Audi" ,"@Nour Audi"),
                tags$a( href = "https://github.com/kimaina", "@Allan Kimaina"),
                tags$a( href = "https://github.com/ilbsm7", "@Triet Tran " ),
+               tags$a( href = "https://github.com/ilbsm7", "@Triet Tran " ),
+               h3("Supervisor:"),
+               tags$a( href = "http://sullivanstatistics.com/", "@Professor Sullivan " ),
+  
                h3("License:"),
                (" This shiny is licensed under"),
                tags$a( href = "https://tldrlegal.com/license/mit-license#fulltext", "MIT License")
