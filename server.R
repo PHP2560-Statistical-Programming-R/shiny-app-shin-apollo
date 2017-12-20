@@ -179,15 +179,67 @@ cvd_population <- function (input) {
   
   #plot the graph
   plot_graph <- plot_ly(patients, x = ~chl, y = ~sbp, z = ~hdl,
-                        marker = list(color = ~points, colorscale = c('#FFE1A1', '#683531'), showscale = TRUE)) %>%
+                        marker = list(color = ~points, 
+                                      colorscale = c('#FFE1A1', '#683531'),
+                                      showscale = T),
+                        
+                        text = ~paste('SBP: ', sbp,
+                                      '</br> LDL: ', chl,
+                                      '</br> HDL: ', hdl)
+                        ) %>%
+    # add markers
     add_markers() %>%
-    layout(scene = list(xaxis = list(title = 'cholesterol'),
-                        yaxis = list(title = 'sbp'),
-                        zaxis = list(title = 'hdl')),
+    layout(
+      
+      # add title
+      title = "Effects of hdl, chl and sbp on CVD Risk",
+      #Label  x,y,z axis
+      scene = list(
+        aspectratio = list(
+          x = 1,
+          y = 1,
+          z = 1
+        ),
+        
+        # set 3d camera angle
+        camera = list(
+          center = list(
+            x = 0,
+            y = 0,
+            z = 0
+          ),
+          
+          # coordinates of the eye position
+          eye = list(
+            x = 1.96903462608,
+            y = -1.09022831971,
+            z = 0.405345349304
+          ),
+          
+          # configure box position
+          up = list(
+            x = 0,
+            y = 0,
+            z = 1
+          )
+        ), 
+        
+        # drag mode
+        dragmode = "turntable",
+        
+        # x axis label
+        xaxis = list(title = 'Cholesterol (LDL)'),
+        
+        # y axis label                
+        yaxis = list(title = 'Blood Pressure (SBP)'),
+        
+        # z axis label                 
+        zaxis = list(title = 'Cholesterol (HDL)')),
+      # add annotation
            annotations = list(
              x = 1.13,
              y = 1.05,
-             text = 'Effects of hdl, chl and sbp on CVD Risk',
+             text = 'CVD Risk Scale',
              xref = 'paper',
              yref = 'paper',
              showarrow = FALSE
