@@ -34,4 +34,4 @@ the app is simple enough to be used by any person who would like to check his CA
 in Alphabatical order and main contrinutions, the whole project wouldn't come to light without disscusions and inputs from whole team members.
 ###Allan Kimaina: 
 ###Nour Audi: original idea, coding the app about page, coding individual patient graph, part of frisk package functions coding and readme page
-###Triet Tran:
+###Triet Tran: function to read index tables, function to convert point to risk and heart age, part of frisk package, code the UI for the shiny app and the input
